@@ -7,7 +7,7 @@ import java.util.Map;
 public class Solution0001 {
 
     public static int[] twoSum(int[] nums, int target) {
-        Map<Integer, Integer> temp = new HashMap<>();
+        Map<Integer, Integer> temp = new HashMap<Integer, Integer>();
         for(int i1 = 0; i1 < nums.length; i1++) {
             int sub_value = target - nums[i1];
             if (temp.containsKey(sub_value)) {
