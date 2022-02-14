@@ -4,6 +4,12 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+/*
+ * Two Sum
+ * Given an array of integers nums and an integer target,
+ * return indices of the two numbers such that they add up to target.
+ *
+ */
 public class Solution0001 {
 
     public static int[] twoSum(int[] nums, int target) {
