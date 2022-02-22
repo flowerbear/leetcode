@@ -36,4 +36,36 @@ public class Solution0323 {
       dfs(adjMap, visited, adjMap.get(i).get(j));
     }
   }
+
+  private int[] map;
+  public int countComponentsUnionFind(int n, int[][] edges) {
+    int count = n;
+
+    map = new int[n];
+    for (int[] edge : edges) {
+      map[edge[0]] = edge[0];
+      map[edge[1]] = edge[1];
+    }
+
+    for (int [] edge : edges) {
+      int parent1 = findParent(edge[0]);
+      int parent2 = findParent(edge[1]);
+      if (parent1 != parent2) {
+        union(parent1, parent2);
+        count--;
+      }
+    }
+    return count;
+  }
+
+  private int findParent(int child) {
+    while(map[child] != child) {
+      child = map[child];
+    }
+    return child;
+  }
+
+  private void union(int child, int parent) {
+    map[child] = parent;
+  }
 }
