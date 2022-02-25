@@ -58,4 +58,44 @@ public class Solution0210 {
       return new int[0];
     }
   }
+
+  public int[] findOrder1(int numCourses, int[][] prerequisites) {
+    int[] result = new int[numCourses], indegree = new int[numCourses];
+    Map<Integer, List<Integer>> adjMap = new HashMap<>();
+    for (int i = 0; i < prerequisites.length; i++) {
+      int src = prerequisites[i][1];
+      int dst = prerequisites[i][0];
+      List<Integer> temp = adjMap.getOrDefault(src, new ArrayList<>());
+      temp.add(dst);
+      adjMap.put(src, temp);
+      indegree[dst]++;
+    }
+
+    Queue<Integer> queue = new LinkedList();
+    for (int i = 0; i < numCourses; i++) {
+      if (indegree[i] == 0) {
+        queue.add(i);
+      }
+    }
+
+    int i = 0;
+    while (!queue.isEmpty()) {
+      int node = queue.poll();
+      result[i++] = node;
+      if (adjMap.containsKey(node)) {
+        for (Integer neighbor : adjMap.get(node)) {
+          indegree[neighbor]--;
+          if (indegree[neighbor] == 0) {
+            queue.add(neighbor);
+          }
+        }
+      }
+    }
+
+    if (i == numCourses) {
+      return result;
+    } else {
+      return new int[0];
+    }
+  }
 }

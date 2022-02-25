@@ -27,4 +27,19 @@ public class Solution0121 {
 
     return result;
   }
+
+  public int maxProfit1(int[] prices) {
+    int result = 0, lowest = Integer.MAX_VALUE, profit = 0;
+
+    for (int i = 0; i < prices.length; i++) {
+      if (prices[i] < lowest) {
+        lowest = prices[i];
+      }
+
+      profit = prices[i] - lowest;
+      result = Math.max(result, profit);
+    }
+
+    return result;
+  }
 }

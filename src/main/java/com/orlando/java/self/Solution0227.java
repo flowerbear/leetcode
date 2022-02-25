@@ -44,4 +44,34 @@ public class Solution0227 {
 
     return result;
   }
+
+  public int calculate1(String s) {
+    if (s == null || s.length() == 0) return 0;
+
+    int currNum = 0, lastNum = 0, result = 0;
+    char operator = '+';
+
+    for (int i = 0; i < s.length(); i++) {
+      char currChar = s.charAt(i);
+      if (Character.isDigit(currChar)) {
+        currNum = currNum * 10 + (currChar - '0');
+      }
+      if (!Character.isDigit(currChar) && !Character.isWhitespace(currChar) || i == s.length() - 1) {
+        if (currChar == '+' || currChar == '-') {
+          result += lastNum;
+          lastNum = (operator == '+') ? currNum : -currNum;
+        } else if (operator == '*') {
+          lastNum *= currNum;
+        } else if (operator == '/') {
+          lastNum /= currNum;
+        }
+
+        operator = currChar;
+        currNum = 0;
+      }
+    }
+
+    result += lastNum;
+    return  result;
+  }
 }
