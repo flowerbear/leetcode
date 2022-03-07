@@ -66,14 +66,8 @@ public class Solution0023 {
     ListNode result = new ListNode(0);
     ListNode curr = result;
 
-    while (left != null || right != null ) {
-      if (left == null) {
-        curr.next = right;
-        right = right.next;
-      } else if (right == null) {
-        curr.next = left;
-        left = left.next;
-      } else if (left.val < right.val) {
+    while (left != null && right != null ) {
+      if (left.val < right.val) {
         curr.next = left;
         left = left.next;
       } else {
@@ -82,7 +76,7 @@ public class Solution0023 {
       }
       curr = curr.next;
     }
-
+    curr.next = left == null ? right : left;
     return result.next;
   }
 }

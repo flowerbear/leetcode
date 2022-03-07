@@ -1,20 +1,9 @@
 package com.orlando.java.leetcode;
 
+import com.orlando.java.common.TreeNode;
 import com.sun.source.tree.Tree;
 
 public class Solution0226 {
-
-  private class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-    TreeNode() {}
-    TreeNode(int val) { this.val = val; }
-    TreeNode(int val, TreeNode left, TreeNode right) {
-      this.val = val;
-      this.left = left;
-      this.right = right; }
-  }
 
   public TreeNode invertTree(TreeNode root) {
 
