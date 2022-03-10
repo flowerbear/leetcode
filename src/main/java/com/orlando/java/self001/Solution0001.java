@@ -14,7 +14,7 @@ import java.util.Map;
  * You can return the answer in any order.
 *
  */
-public class solution0001 {
+public class Solution0001 {
 
   // Hashmap => nums[i], i
   public int[] twoSum(int[] nums, int target) {
