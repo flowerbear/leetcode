@@ -34,4 +34,22 @@ public class Solution0005 {
     }
     return r - l - 1;
   }
+
+  // DP: dp[i][j] = s.charAt(i) == s.charAt(j) && (j - i < 3 || dp[i + 1][j - 1]
+  public String longestPalindrome1(String s) {
+    int n = s.length();
+    boolean[][] dp = new boolean[n + 1][n + 1];
+    String result = null;
+
+    for (int i = n - 1; i >= 0; i--) {
+      for (int j = i; j < n; j++) {
+        dp[i][j] = s.charAt(i) == s.charAt(j) &&  (j - i < 3 || dp[i + 1][j - 1]);
+
+        if (dp[i][j] && (result == null || j - i + 1 > result.length())) {
+          result = s.substring(i, j + 1);
+        }
+      }
+    }
+    return result;
+  }
 }

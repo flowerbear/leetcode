@@ -35,4 +35,24 @@ public class Solution0008 {
     }
     return sign * result;
   }
+
+  public int myAtoi1(String s) {
+    int result = 0, n = s.length(), sign = 1, i = 0;
+    while (i < n && s.charAt(i) == ' ') i++;
+
+    if (i < n && (s.charAt(i) == '+' || s.charAt(i) == '-')) sign = s.charAt(i++) == '-' ? -1 : 1;
+    while (i < n && Character.isDigit(s.charAt(i))) {
+      int digit = s.charAt(i) - '0';
+      if ((result > Integer.MAX_VALUE / 10) || (result == Integer.MAX_VALUE && digit > Integer.MAX_VALUE % 10))
+        return sign == 1 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
+      result = result * 10 + digit;
+      i++;
+    }
+    return result * sign;
+  }
+
+  public static void main(String[] args) {
+    Solution0008 temp = new Solution0008();
+    int i = temp.myAtoi1("2147483648");
+  }
 }

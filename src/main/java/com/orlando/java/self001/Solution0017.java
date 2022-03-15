@@ -10,6 +10,7 @@ package com.orlando.java.self001;
  * any letters.
  * 2: abc; 3: def; 4: ghi; 5: jkl; 6:mno; 7: pqrs; 8: tuv; 9: wxyz
  */
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -30,4 +31,24 @@ public class Solution0017 {
     }
     return result;
   }
+
+  public List<String> letterCombinations1(String digits) {
+    String[] mapping = new String[] {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+    List<String> result = new ArrayList<>();
+    backtrack(result, new StringBuilder(), digits, 0, mapping);
+    return result;
+  }
+
+  private void backtrack(List<String> result, StringBuilder tempStr, String digits, int start, String[] mapping) {
+    if (tempStr.length() == digits.length()) {
+      result.add(tempStr.toString());
+      return;
+    }
+    for (char c : mapping[digits.charAt(start) - '2'].toCharArray()) {
+      tempStr.append(c);
+      backtrack(result, tempStr, digits, start + 1, mapping);
+      tempStr.deleteCharAt(tempStr.length() - 1);
+    }
+  }
+
 }

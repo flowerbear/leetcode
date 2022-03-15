@@ -45,8 +45,8 @@ public class Solution0010 {
         dp[0][i] = true;
     }
 
-    for (int i = 1; i < m + 1; i++) {
-     for (int j = 1; j < n + 1; j++) {
+    for (int i = 1; i <= m; i++) {
+     for (int j = 1; j <= n; j++) {
        char curS = s.charAt(i - 1);
        char curP = p.charAt(j - 1);
        // Induction rule is very similar to edit distance, where we also consider from the end. And it is based on what character in the pattern we meet.
@@ -54,7 +54,7 @@ public class Solution0010 {
        //    ######a(i)
        //    ####a(j)
        // 2. if p.charAt(j) == '.', M[i][j] = M[i - 1][j - 1]
-       // 	  #######a(i)
+       // 	 #######a(i)
        //    ####.(j)
        // 3. if p.charAt(j) == '*':
        //    1. if p.charAt(j - 1) != '.' && p.charAt(j - 1) != s.charAt(i), then b* is counted as empty. M[i][j] = M[i][j - 2]
@@ -64,7 +64,7 @@ public class Solution0010 {
        //       ######a(i)
        //       ####.*(j)
        //
-       // 	  	 #####a(i)
+       // 	   #####a(i)
        //    	 ###a*(j)
        //      2.1 if p.charAt(j - 1) is counted as empty, then M[i][j] = M[i][j - 2]
        //      2.2 if counted as one, then M[i][j] = M[i - 1][j - 2] Unnecessary
