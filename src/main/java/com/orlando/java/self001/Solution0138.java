@@ -31,6 +31,44 @@ import com.orlando.java.common.RandomNode;
 public class Solution0138 {
 
   public RandomNode copyRandomList(RandomNode head) {
-      return null;
+    RandomNode iter = head, next;
+
+    // First round: make copy of each node,
+    // and link them together side-by-side in a single list.
+    while (iter != null) {
+      next = iter.next;
+
+      RandomNode copy = new RandomNode(iter.val);
+      iter.next = copy;
+      copy.next = next;
+      iter = next;
+    }
+    // Second round: assign random pointers for the copy nodes.
+    iter = head;
+    while (iter != null) {
+      if (iter.random != null) {
+        iter.next.random = iter.random.next;
+      }
+      iter = iter.next.next;
+    }
+
+    // Third round: restore the original list, and extract the copy list.
+    iter = head;
+    RandomNode dummy = new RandomNode();
+    RandomNode copy, copyIter = dummy;
+    while (iter != null) {
+      next = iter.next.next;
+
+      //extract the copy
+      copy = iter.next;
+      copyIter.next = copy;
+      copyIter = copy;
+
+      // restore the original list
+      iter.next = next;
+
+      iter = next;
+    }
+    return dummy.next;
   }
 }
