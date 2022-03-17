@@ -1,5 +1,7 @@
 package com.orlando.java.self001;
 
+import java.util.Stack;
+
 /*
  * Evaluate Reverse Polish Notation
  *
@@ -16,6 +18,18 @@ package com.orlando.java.self001;
 public class Solution0150 {
 
   public int evalRPN(String[] tokens) {
-    return 0;
+    Stack<Integer> stack = new Stack<>();
+    int a, b;
+    for (String s : tokens) {
+      if (s.equals("+")) stack.add(stack.pop() + stack.pop());
+      else if (s.equals("*")) stack.add(stack.pop() * stack.pop());
+      else if (s.equals("/") || s.equals("-")) {
+        b = stack.pop(); a = stack.pop();
+        stack.add(s.equals("/") ? a / b : a - b);
+      } else {
+        stack.add(Integer.parseInt(s));
+      }
+    }
+    return stack.pop();
   }
 }
