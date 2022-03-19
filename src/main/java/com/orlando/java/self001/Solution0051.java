@@ -26,7 +26,7 @@ public class Solution0051 {
   }
 
   private void backtrack(List<Integer> currentQueen, List<List<String>> result, int n) {
-    if (currentQueen.size() == 0) {
+    if (currentQueen.size() == n) {
       List<String> temp = new ArrayList<>();
       for (int i = 0; i < n; i++) {
         char[] t = new char[n];
