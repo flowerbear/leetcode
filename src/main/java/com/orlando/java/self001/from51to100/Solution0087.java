@@ -1,5 +1,8 @@
 package com.orlando.java.self001.from51to100;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /*
  * Scramble String
  *
@@ -51,5 +54,40 @@ public class Solution0087 {
       }
     }
     return dp[len][0][0];
+  }
+
+  // Recursive
+  Map<String, Boolean> map = new HashMap<>();
+
+  public boolean isScrambleRec(String s1, String s2) {
+    StringBuilder sb = new StringBuilder(s1 + s2);
+    String key = sb.toString();
+
+    if (map.containsKey(key)) return map.get(key);
+
+    if (s1.equals(s2)) return true;
+
+    int len = s1.length();
+    int[] count = new int[26];
+    for (int i = 0; i < len; i++) {
+      count[s1.charAt(i) - 'a']++;
+      count[s2.charAt(i) - 'a']--;
+    }
+    for (int i = 0; i < 26; i++) {
+      if (count[i] != 0) return false;
+    }
+
+    for (int i = 1; i < len; i++) {
+      if (isScrambleRec(s1.substring(0, i), s2.substring(0, i)) && isScrambleRec(s1.substring(i), s2.substring(i))) {
+        map.put(key, true);
+        return true;
+      }
+      if (isScrambleRec(s1.substring(0, i), s2.substring(len - i)) && isScrambleRec(s1.substring(i), s2.substring(0, (len - i)))) {
+        map.put(key, true);
+        return true;
+      }
+    }
+    map.put(key, false);
+    return false;
   }
 }
