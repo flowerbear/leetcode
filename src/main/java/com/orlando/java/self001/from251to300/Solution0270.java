@@ -16,6 +16,12 @@ import com.orlando.java.common.TreeNode;
 public class Solution0270 {
 
   public int closestValue(TreeNode root, double target) {
+    TreeNode child = target < root.val ? root.left : root.right;
 
+    if (child == null) return root.val;
+
+    int childClosest = closestValue(child, target);
+
+    return Math.abs(root.val - target) < Math.abs(childClosest - target) ? root.val : childClosest;
   }
 }
