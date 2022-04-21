@@ -42,8 +42,8 @@ public class Sort {
   private void mergeSort(int[] nums, int left, int right) {
     if (left < right) {
       int m = left + (right - left) / 2;
-      quickSort(nums, left, m);
-      quickSort(nums, m + 1, right);
+      mergeSort(nums, left, m);
+      mergeSort(nums, m + 1, right);
       merge(nums, left, m, right);
     }
   }
