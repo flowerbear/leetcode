@@ -29,8 +29,11 @@ public class Solution0300 {
   }
 
   public int lengthOfLIS1(int[] nums) {
+    // tails is an array storing the smallest tail of all increasing subsequences with length i+1 in tails[i].
     int[] tails = new int[nums.length];
     int size = 0;
+    // (1) if x is larger than all tails, append it, increase the size by 1
+    // (2) if tails[i-1] < x <= tails[i], update tails[i]
     for (int x : nums) {
       int i = 0, j = size;
       while (i != j) {
