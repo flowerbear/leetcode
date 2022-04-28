@@ -19,7 +19,7 @@ public class Solution0158 {
       int pointer = 0;
       while (pointer < n) {
         if (tempPointer == 0) tempCount = read4(temp);
-        if (tempCount == 0);
+        if (tempCount == 0) break;
         while (pointer < n & tempPointer < tempCount) {
           buf[pointer++] = temp[tempPointer++];
         }
