@@ -11,4 +11,8 @@ public interface NestedInteger {
   public Integer getInteger();
 
   public List<NestedInteger> getList();
+
+  public void add(NestedInteger ni);
+
+  public void setInteger(int value);
 }
