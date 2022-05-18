@@ -17,8 +17,23 @@ package com.orlando.java.self001.from351to400;
  */
 public class Solution0396 {
 
+  // F(k) = F(k - 1) + sum - nBk[0]
   public int maxRotateFunction(int[] nums) {
 
+    int sum = 0, len = nums.length, f = 0;
+
+    for (int i = 0; i < len; i++) {
+      f += i * nums[i];
+      sum += nums[i];
+    }
+
+    int max = f;
+    for (int i = len - 1; i >= 1; i--) {
+      f += sum - len * nums[i];
+      max = Math.max(max, f);
+    }
+
+    return max;
   }
 }
 
