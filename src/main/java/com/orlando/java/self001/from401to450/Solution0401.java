@@ -25,7 +25,7 @@ import java.util.List;
 public class Solution0401 {
 
   public List<String> readBinaryWatch(int turnedOn) {
-
+    return null;
   }
 }
 
