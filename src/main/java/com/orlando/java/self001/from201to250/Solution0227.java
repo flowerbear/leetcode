@@ -17,14 +17,14 @@ package com.orlando.java.self001.from201to250;
 public class Solution0227 {
 
   public int calculate(String s) {
-    int currNum = 0, lastNum = 0, result = 0;
+    int currNum = 0, lastNum = 0, result = 0, i = 0;
     char operation = '+';
 
     for (char c : s.toCharArray()) {
       if (Character.isDigit(c)) {
         currNum = currNum * 10 + (c - '0');
       }
-      if (!Character.isDigit(c) && !Character.isWhitespace(c)) {
+      if (i == s.length()  - 1 || !Character.isDigit(c) && !Character.isWhitespace(c)) {
         if (operation == '+' || operation == '-') {
           result += lastNum;
           lastNum = (operation == '+') ? currNum : -currNum;
@@ -36,6 +36,7 @@ public class Solution0227 {
         operation = c;
         currNum = 0;
       }
+      i++;
     }
     result += lastNum;
     return result;
