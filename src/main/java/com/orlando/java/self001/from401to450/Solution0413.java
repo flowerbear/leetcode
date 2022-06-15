@@ -16,7 +16,16 @@ package com.orlando.java.self001.from401to450;
 public class Solution0413 {
 
   public int numberOfArithmeticSlices(int[] nums) {
-
+    int result = 0;
+    for (int i = 2, prev = 0; i < nums.length; i++) {
+      if (nums[i] - nums[i - 1] == nums[i - 1] - nums[i - 2]) {
+        prev++;
+        result += prev;
+      } else {
+        prev = 0;
+      }
+    }
+    return result;
   }
 }
 
