@@ -39,4 +39,12 @@ public class Solution0254 {
     }
   }
 
+  public static void main(String[] args) {
+    Solution0254 temp = new Solution0254();
+    List<List<Integer>> result = temp.getFactors(8);
+    for (List<Integer> array : result) {
+      System.out.println(array.toString());
+    }
+
+  }
 }
