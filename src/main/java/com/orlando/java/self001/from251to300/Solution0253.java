@@ -2,6 +2,7 @@ package com.orlando.java.self001.from251to300;
 
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
 import java.util.Queue;
 
 /*
@@ -17,7 +18,7 @@ public class Solution0253 {
 
     Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));
 
-    Queue<Integer> heap = new LinkedList<>();
+    PriorityQueue<Integer> heap = new PriorityQueue<>();
     int result = 1;
     heap.offer(intervals[0][1]);
     for (int i = 1; i < intervals.length; i++) {
