@@ -14,3 +14,11 @@ WHERE
                 AND e1.DepartmentId = e2.DepartmentId
         )
 ;
+
+
+
+select dep_name as Department, emp_name as Employee, salary
+from (
+select e.name as emp_name, d.name as dep_name, e.salary, DENSE_RANK() OVER(PARTITION BY d.name order by e.salary desc) as rnk
+from employee e inner join Department d on e.departmentId = d.id) t
+where t.rnk<=3
