@@ -2,6 +2,8 @@ package com.orlando.java.self001.from1to50;
 
 import com.orlando.java.common.ListNode;
 
+import java.util.PriorityQueue;
+
 /*
  * Merge k Sorted Lists
  *
@@ -70,5 +72,26 @@ public class Solution0023 {
       lists[p] = lists[p].next; // ****
     }
     return head.next;
+  }
+  //O(Nlogk)
+  public ListNode mergeKLists2(ListNode[] lists) {
+
+    if (lists == null || lists.length == 0) return null;
+
+    ListNode dummy = new ListNode(-1), p = dummy;
+    PriorityQueue<ListNode> pq = new PriorityQueue<>(lists.length, (a, b)->(a.val - b.val));
+
+    for (ListNode head : lists) {
+      if (head != null) pq.add(head);
+    }
+
+    while (!pq.isEmpty()) {
+      ListNode node = pq.poll();
+      p.next = node;
+      if (node.next != null) pq.add(node.next);
+      p = p.next;
+    }
+
+    return dummy.next;
   }
 }

@@ -20,4 +20,25 @@ public class Solution0104 {
     int right = maxDepth(root.right);
     return Math.max(left, right) + 1;
   }
+
+  private int res = 0;
+  private int depth = 0;
+
+  public int maxDepth1(TreeNode root) {
+    traverse(root);
+    return res;
+  }
+
+  private void traverse(TreeNode root) {
+    if (root == null) return;
+
+    depth++;
+
+    if (root.left == null && root.right == null) {
+      res = Math.max(res, depth);
+    }
+    traverse(root.left);
+    traverse(root.right);
+    depth--;
+  }
 }
