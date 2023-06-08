@@ -1,9 +1,6 @@
 package com.orlando.java.self001.from151to200;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /*
  * Repeated DNA Sequences
@@ -29,5 +26,53 @@ public class Solution0187 {
     }
 
     return new ArrayList<>(repeated);
+  }
+
+  public List<String> findRepeatedDnaSequences1(String s) {
+    int[] nums = new int[s.length()];
+    int i = 0;
+    for (Character c : s.toCharArray()) {
+      switch (c) {
+        case 'A':
+          nums[i] = 0;
+          break;
+        case 'G':
+          nums[i] = 1;
+          break;
+        case 'C':
+          nums[i] = 2;
+          break;
+        case 'T':
+          nums[i] = 3;
+          break;
+      }
+      i++;
+    }
+
+    Set<Integer> seen = new HashSet<>();
+    Set<String> res = new HashSet<>();
+
+    int L = 10, R = 4, RL = (int) Math.pow(R, L - 1), windowHash = 0;
+
+    int left = 0, right = 0;
+
+    while (right < nums.length) {
+      windowHash = R * windowHash + nums[right];
+      right++;
+
+      if (right - left == L) {
+        if (seen.contains(windowHash)) res.add(s.substring(left, right));
+        else seen.add(windowHash);
+        windowHash = windowHash - nums[left] * RL;
+        left++;
+      }
+
+    }
+    return new LinkedList<>(res);
+  }
+
+  public static void main(String[] args) {
+    Solution0187 temp = new Solution0187();
+    List<String> result = temp.findRepeatedDnaSequences1("AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT");
   }
 }

@@ -1,12 +1,12 @@
-package com.orlando.java.self001.from501to550;
+package com.orlando.java.self001.from1001to1050;
 
 import com.orlando.java.common.TreeNode;
 
-public class Solution0538 {
+public class Solution1038 {
 
     private int sum = 0;
 
-    public TreeNode convertBST(TreeNode root) {
+    public TreeNode bstToGst(TreeNode root) {
         traverse(root);
         return root;
     }
@@ -20,4 +20,3 @@ public class Solution0538 {
         traverse(root.left);
     }
 }
-

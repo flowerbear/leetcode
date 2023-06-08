@@ -1,6 +1,7 @@
 package com.orlando.java.self001.from1to50;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /*
@@ -33,5 +34,29 @@ public class Solution0046 {
   public static void main(String[] args) {
     Solution0046 temp = new Solution0046();
     temp.permute(new int[]{1, 2, 3});
+  }
+
+
+  List<List<Integer>> res = new LinkedList<>();
+
+  public List<List<Integer>> permute1(int[] nums) {
+    boolean[] used = new boolean[nums.length];
+    backtrack1(nums, new LinkedList<>(), used);
+    return res;
+  }
+
+  private void backtrack1(int[] nums, LinkedList<Integer> track, boolean[] used) {
+    if (track.size() == nums.length) {
+      res.add(new LinkedList(track));
+      return;
+    }
+    for (int i = 0; i < nums.length; i++) {
+      if (used[i]) continue;
+      track.add(nums[i]);
+      used[i] = true;
+      backtrack1(nums, track, used);
+      track.removeLast();
+      used[i] = false;
+    }
   }
 }

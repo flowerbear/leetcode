@@ -61,3 +61,23 @@ Output:
 | 100        | 2008       | 10       | 5000  |
 | 200        | 2011       | 15       | 9000  |
 +------------+------------+----------+-------+
+
+select product_id, year as first_year, quantity, price from Sales
+    where (product_id, year) in (
+        select product_id, min(year) from Sales
+        group by product_id);
+
+SELECT product_id,
+       Min(year) AS first_year,
+       quantity,
+       price
+FROM   sales
+GROUP  BY product_id
+ORDER  BY NULL ;
+
+
+select product_id, year as first_year, quantity, price
+from (select product_id, year, quantity, price, rank() over (partition by product_id order by year) rn
+from sales
+) a
+where a.rn = 1;

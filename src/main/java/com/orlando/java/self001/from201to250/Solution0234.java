@@ -39,4 +39,18 @@ public class Solution0234 {
     }
     return prev;
   }
+
+  ListNode left;
+  public boolean isPalindrome1(ListNode head) {
+    left = head;
+    return traverse(head);
+  }
+
+  private boolean traverse(ListNode right) {
+    if (right == null) return true;
+    boolean res = traverse(right.next);
+    res = res && (left.val == right.val);
+    left = left.next;
+    return res;
+  }
 }

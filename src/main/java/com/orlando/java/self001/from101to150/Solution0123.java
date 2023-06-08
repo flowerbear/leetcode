@@ -25,4 +25,22 @@ public class Solution0123 {
     return twoBuyProfit;
   }
 
+  /*
+   * dp[i][k][0]=max(dp[i-1][k][0], dp[i-1][k][1] + prices[i])
+   * dp[i][k][1]=max(dp[i-1][k][1], dp[i-1][k-1][0] - prices[i])
+   *
+   */
+  public int maxProfit2(int[] prices) {
+
+    int n = prices.length;
+    int dp_i_0_1 = 0, dp_i_1_1 = Integer.MIN_VALUE, dp_i_0_2 = 0, dp_i_1_2 = Integer.MIN_VALUE;
+    for (int i = 0; i < n; i++) {
+      dp_i_0_2 = Math.max(dp_i_0_2, dp_i_1_2 + prices[i]);
+      dp_i_1_2 = Math.max(dp_i_1_2, dp_i_0_1 - prices[i]);
+      dp_i_0_1 = Math.max(dp_i_0_1, dp_i_1_1 + prices[i]);
+      dp_i_1_1 = Math.max(dp_i_1_1, -prices[i]);
+    }
+    return dp_i_0_2;
+  }
+
 }

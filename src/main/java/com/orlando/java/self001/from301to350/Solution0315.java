@@ -13,10 +13,12 @@ import java.util.List;
  */
 public class Solution0315 {
   private class ArrayWithOrigIdx {
-    int val; int origIdx;
+    int val;
+    int origIdx;
 
     public ArrayWithOrigIdx(int val, int origIdx) {
-      this.val = val; this.origIdx = origIdx;
+      this.val = val;
+      this.origIdx = origIdx;
     }
   }
 
@@ -78,22 +80,24 @@ public class Solution0315 {
   // The basic idea is to do merge sort to nums[]. To record the result, we need to keep the index of each number in
   // the original array. So instead of sort the number in nums, we sort the indexes of each number.
   int[] count;
+
   public List<Integer> countSmaller1(int[] nums) {
     List<Integer> res = new ArrayList<Integer>();
 
     count = new int[nums.length];
     int[] indexes = new int[nums.length];
-    for(int i = 0; i < nums.length; i++){
+    for (int i = 0; i < nums.length; i++) {
       indexes[i] = i;
     }
     mergesort(nums, indexes, 0, nums.length - 1);
-    for(int i = 0; i < count.length; i++){
+    for (int i = 0; i < count.length; i++) {
       res.add(count[i]);
     }
     return res;
   }
-  private void mergesort(int[] nums, int[] indexes, int start, int end){
-    if(end <= start){
+
+  private void mergesort(int[] nums, int[] indexes, int start, int end) {
+    if (end <= start) {
       return;
     }
     int mid = start + (end - start) / 2;
@@ -102,36 +106,89 @@ public class Solution0315 {
 
     merge(nums, indexes, start, mid, end);
   }
-  private void merge(int[] nums, int[] indexes, int start, int mid, int end){
+
+  private void merge(int[] nums, int[] indexes, int start, int mid, int end) {
     int left_index = start;
-    int right_index = mid+1;
+    int right_index = mid + 1;
     int rightcount = 0;
     int[] new_indexes = new int[end - start + 1];
 
     int sort_index = 0;
-    while(left_index <= mid && right_index <= end){
-      if(nums[indexes[right_index]] < nums[indexes[left_index]]){
+    while (left_index <= mid && right_index <= end) {
+      if (nums[indexes[right_index]] < nums[indexes[left_index]]) {
         new_indexes[sort_index] = indexes[right_index];
         rightcount++;
         right_index++;
-      }else{
+      } else {
         new_indexes[sort_index] = indexes[left_index];
         count[indexes[left_index]] += rightcount;
         left_index++;
       }
       sort_index++;
     }
-    while(left_index <= mid){
+    while (left_index <= mid) {
       new_indexes[sort_index] = indexes[left_index];
       count[indexes[left_index]] += rightcount;
       left_index++;
       sort_index++;
     }
-    while(right_index <= end){
+    while (right_index <= end) {
       new_indexes[sort_index++] = indexes[right_index++];
     }
-    for(int i = start; i <= end; i++){
+    for (int i = start; i <= end; i++) {
       indexes[i] = new_indexes[i - start];
+    }
+  }
+
+  private class Pair {
+    int val, id;
+    Pair(int val, int id) {this.val = val; this.id = id;}
+  }
+
+  private Pair[] temp;
+  //private int[] count;
+
+  public List<Integer> countSmaller2(int[] nums) {
+    int n = nums.length;
+    count = new int[n];
+    temp = new Pair[n];
+    Pair[] arr = new Pair[n];
+
+    for (int i = 0; i < n; i++) {
+      arr[i] = new Pair(nums[i], i);
+    }
+
+    sort(arr, 0, n - 1);
+
+    List<Integer> res = new LinkedList<>();
+    for (int c : count) res.add(c);
+    return res;
+  }
+
+  private void sort(Pair[] arr, int lo, int hi) {
+    if (lo == hi) return;
+    int mid = lo + (hi - lo) / 2;
+    sort(arr, lo, mid);
+    sort(arr, mid + 1, hi);
+    merge(arr, lo, mid, hi);
+  }
+
+  private void merge(Pair[] arr, int lo, int mid, int hi) {
+    for (int i = lo; i <= hi; i++) {
+      temp[i] = arr[i];
+    }
+
+    int i = lo, j = mid + 1;
+    for (int p = lo; p <= hi; p++) {
+      if (i == mid + 1) arr[p] = temp[j++];
+      else if (j == hi + 1) {
+        arr[p] = temp[i++];
+        count[arr[p].id] += j - mid - 1;
+      } else if (temp[i].val > temp[j].val) arr[p] = temp[j++];
+      else {
+        arr[p] = temp[i++];
+        count[arr[p].id] += j - mid - 1;
+      }
     }
   }
 }

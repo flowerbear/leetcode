@@ -28,4 +28,21 @@ public class Solution0114 {
     pre = root;
     return pre;
   }
+
+  public void flatten1(TreeNode root) {
+    if (root == null) return;
+
+    flatten1(root.left);
+    flatten1(root.right);
+
+    TreeNode left = root.left;
+    TreeNode right = root.right;
+
+    root.left = null;
+    root.right = left;
+
+    TreeNode p = root;
+    while (p.right != null) p = p.right;
+    p.right = right;
+  }
 }

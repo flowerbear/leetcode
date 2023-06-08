@@ -20,4 +20,13 @@ public class Solution0206 {
     }
     return prev;
   }
+
+  public ListNode reverseList1(ListNode head) {
+
+    if (head == null || head.next == null) return head;
+    ListNode last = reverseList1(head.next);
+    head.next.next = head;
+    head.next = null;
+    return last;
+  }
 }
