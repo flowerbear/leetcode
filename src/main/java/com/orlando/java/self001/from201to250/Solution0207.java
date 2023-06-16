@@ -44,4 +44,39 @@ public class Solution0207 {
     }
     return (i == numCourses);
   }
+
+  boolean[] onPath;
+  boolean[] visited;
+  boolean hasCycle = false;
+  public boolean canFinishDFS(int numCourses, int[][] prerequisties) {
+    List<Integer>[] graph = buildGraph(numCourses, prerequisties);
+
+    visited = new boolean[numCourses];
+    onPath = new boolean[numCourses];
+
+    for (int i = 0; i < numCourses; i++) {
+      traverse(graph, i);
+    }
+    return !hasCycle;
+  }
+
+  private void traverse(List<Integer>[] graph, int s) {
+    if (onPath[s]) hasCycle = true;
+    if (visited[s] || hasCycle) return;
+    visited[s] = true;
+    onPath[s] = true;
+    for (int t : graph[s]) {
+      traverse(graph, t);
+    }
+    onPath[s] = false;
+  }
+
+  private List<Integer>[] buildGraph(int numCourses, int[][] prerequisties) {
+    List<Integer>[] graph = new LinkedList[numCourses];
+    for (int i = 0; i < numCourses; i++) graph[i] = new LinkedList<>();
+    for (int[] edge : prerequisties) {
+      graph[edge[1]].add(edge[0]);
+    }
+    return graph;
+  }
 }

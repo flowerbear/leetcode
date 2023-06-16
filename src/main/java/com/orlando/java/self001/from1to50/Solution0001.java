@@ -1,5 +1,6 @@
 package com.orlando.java.self001.from1to50;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,6 +29,18 @@ public class Solution0001 {
       } else {
         subMap.put(nums[i], i);
       }
+    }
+    return new int[0];
+  }
+
+  public int[] twoSum1(int[] nums, int target) {
+    Arrays.sort(nums);
+    int left = 0, right = nums.length - 1;
+    while (left < right) {
+      int sum = nums[left] + nums[right];
+      if (sum == target) return new int[]{left, right};
+      else if (sum < target) left++;
+      else right--;
     }
     return new int[0];
   }

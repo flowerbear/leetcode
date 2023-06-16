@@ -37,4 +37,24 @@ public class Solution0096 {
         dp[level] += dp[level-root]*dp[root-1];
     return dp[n];
   }
+
+  int[][] memo;
+
+  public int numTrees1(int n) {
+    memo = new int[n + 1][n + 1];
+    return count(1, n);
+  }
+  private int count(int lo, int hi) {
+    if (lo > hi) return 1;
+    if (memo[lo][hi] > 0) return memo[lo][hi];
+    int res = 0;
+    for (int i = lo; i <= hi; i++) {
+      int left = count(lo, i - 1);
+      int right = count(i + 1, hi);
+      res += left * right;
+    }
+
+    memo[lo][hi] = res;
+    return res;
+  }
 }

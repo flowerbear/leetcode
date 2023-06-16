@@ -20,7 +20,10 @@ public class Solution0095 {
 
   private List<TreeNode> genTreeList(int start ,int end) {
     List<TreeNode> result = new ArrayList<>();
-    if (start > end) result.add(null);
+    if (start > end) {
+      result.add(null);
+      return result;
+    }
 
     for (int idx = start; idx <= end; idx++) {
       List<TreeNode> leftList = genTreeList(start, idx - 1);

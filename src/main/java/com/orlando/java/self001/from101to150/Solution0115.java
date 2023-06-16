@@ -1,5 +1,7 @@
 package com.orlando.java.self001.from101to150;
 
+import java.util.Arrays;
+
 /*
  * Distinct Subsequences
  *
@@ -59,5 +61,43 @@ public class Solution0115 {
       }
     }
     return dp[s.length()][t.length()];
+  }
+
+  int[][] memo;
+  public int numDistinct1(String s, String t) {
+    memo = new int[s.length()][t.length()];
+    for (int[] row : memo) {
+      Arrays.fill(row, -1);
+    }
+    return dp(s, 0, t, 0);
+  }
+
+  private int dp(String s, int i, String t, int j) {
+    if (j == t.length()) return 1;
+    if (s.length() - i < t.length() - j) return 0;
+
+    if (memo[i][j] != -1) return memo[i][j];
+    int res = 0;
+    for (int k = i; k < s.length(); k++) {
+      if (s.charAt(k) == t.charAt(j)) res += dp(s, k + 1, t, j + 1);
+    }
+    memo[i][j] = res;
+    return memo[i][j];
+  }
+
+  private int dp1(String s, int i, String t, int j) {
+    if (j == t.length()) return 1;
+    if (s.length() - i < t.length() - j) return 0;
+
+    if (memo[i][j] != -1) return memo[i][j];
+    int res = 0;
+
+    if (s.charAt(i) == t.charAt(j))
+      res = dp1(s, i + 1, t, j + 1) + dp1(s, i + 1, t, j);
+    else
+      res = dp1(s, i + 1, t, j);
+
+    memo[i][j] = res;
+    return res;
   }
 }

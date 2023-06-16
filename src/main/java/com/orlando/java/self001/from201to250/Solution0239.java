@@ -1,6 +1,8 @@
 package com.orlando.java.self001.from201to250;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 /*
  * Sliding Window Maximum
@@ -31,5 +33,40 @@ public class Solution0239 {
       }
     }
     return result;
+  }
+
+  private class MonotonicQueue {
+
+    private LinkedList<Integer> maxQ = new LinkedList<>();
+    void push(int n) {
+      while (!maxQ.isEmpty() && maxQ.getLast() < n ) maxQ.pollLast();
+      maxQ.addLast(n);
+    }
+    int max() {
+      return maxQ.getFirst();
+    }
+    void pop(int n) {
+      if (n == maxQ.getFirst()) maxQ.pollFirst();
+    }
+  }
+
+  public int[] maxSlidingWindow1(int[] nums, int k) {
+
+    MonotonicQueue window = new MonotonicQueue();
+    List<Integer> res = new ArrayList<>();
+    for (int i = 0; i < nums.length; i++) {
+      if (i < k - 1) window.push(nums[i]);
+      else {
+        window.push(nums[i]);
+        res.add(window.max());
+        window.pop(nums[i - k + 1]);
+      }
+    }
+
+    int[] arr = new int[res.size()];
+    for (int i = 0; i < res.size(); i++) {
+      arr[i] = res.get(i);
+    }
+    return arr;
   }
 }

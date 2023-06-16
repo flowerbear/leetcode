@@ -19,7 +19,7 @@ import java.util.Arrays;
 public class Solution0354 {
 
   public int maxEnvelopes(int[][] envelopes) {
-    Arrays.sort(envelopes, (a, b) -> a[0] == b[0] ? Integer.compare(b[1], a[1]) : Integer.compare(a[0], b[0]));
+    Arrays.sort(envelopes, (a, b) -> (a[0] == b[0] ? Integer.compare(b[1], a[1]) : Integer.compare(a[0], b[0])));
     return longestIncreasingSubsequence(envelopes);
   }
 
