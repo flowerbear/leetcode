@@ -1,5 +1,7 @@
 package com.orlando.java.self001.from301to350;
 
+import java.util.Arrays;
+
 /*
  * Coin Change
  *
@@ -51,5 +53,28 @@ public class Solution0322 {
     return dp[amount];
   }
 
+  int[] memo;
+
+  public int coinChange2(int[] coins, int amount) {
+    if (amount < 1) return 0;
+    memo = new int[amount + 1];
+    Arrays.fill(memo, -9999);
+    return dp(coins, amount);
+  }
+
+  private int dp(int[] coins, int amount) {
+    if (amount == 0) return 0;
+    if (amount < 0) return -1;
+    if (memo[amount] != -9999) return memo[amount];
+
+    int res = Integer.MAX_VALUE;
+    for (int coin : coins) {
+      int subProblem = dp(coins, amount - coin);
+      if (subProblem == -1) continue;
+      res = Math.min(res, subProblem + 1);
+    }
+    memo[amount] = res == Integer.MAX_VALUE ? -1 : res;
+    return memo[amount];
+  }
 }
 

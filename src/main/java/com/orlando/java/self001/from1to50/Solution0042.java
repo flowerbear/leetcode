@@ -31,4 +31,22 @@ public class Solution0042 {
     }
     return result;
   }
+
+  public int trap1(int[] height) {
+    int lmax = 0, rmax = 0, l = 0, r = height.length - 1, res = 0;
+
+    while (l < r) {
+      lmax = Math.max(lmax, height[l]);
+      rmax = Math.max(rmax, height[r]);
+
+      if (lmax < rmax) {
+        res += lmax - height[l];
+        l++;
+      } else {
+        res += rmax - height[r];
+        r--;
+      }
+    }
+    return res;
+  }
 }

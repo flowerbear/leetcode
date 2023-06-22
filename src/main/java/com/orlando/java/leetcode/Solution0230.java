@@ -36,4 +36,20 @@ public class Solution0230 {
       root = root.right;
     }
   }
+
+
+  int result, count = 0;
+
+  public int kthSmallest2(TreeNode root, int k) {
+    traverse(root, k);
+    return result;
+  }
+
+  private void traverse(TreeNode root, int k) {
+    if (root == null) return;
+    traverse(root.left, k);
+    count++;
+    if (count == k) result = root.val;
+    traverse(root.right, k);
+  }
 }

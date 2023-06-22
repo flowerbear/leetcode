@@ -17,22 +17,18 @@ import java.util.List;
 public class Solution0239 {
 
   public int[] maxSlidingWindow(int[] nums, int k) {
-    int n = nums.length;
-    int[] result = new int[n - k + 1];
-    LinkedList<Integer> dq = new LinkedList<>();
+    int n = nums.length, m = n - k + 1, res[] = new int[m];
+    LinkedList<Integer> queue = new LinkedList<>();
     for (int i = 0; i < n; i++) {
-      if (!dq.isEmpty() && dq.peek() < i - k + 1) {
-        dq.poll();
-      }
-      while (!dq.isEmpty() && nums[i] >= nums[dq.peekLast()]) {
-        dq.pollLast();
-      }
-      dq.offer(i);
-      if (i - k + 1 >= 0) {
-        result[i - k + 1] = nums[dq.peek()];
+      while (!queue.isEmpty() && queue.getLast() < nums[i]) queue.pollLast();
+      queue.addLast(nums[i]);
+      if (i >= k - 1) {
+        int temp = queue.getFirst();
+        res[i - k + 1] = temp;
+        if (nums[i - k + 1] == temp) queue.pollFirst();
       }
     }
-    return result;
+    return res;
   }
 
   private class MonotonicQueue {

@@ -10,43 +10,36 @@ package com.orlando.java.self001.from201to250;
  */
 public class Solution0215 {
 
-  private void swap(int[] a ,int i, int j) {
-    int temp = a[i];
-    a[i] = a[j];
-    a[j] = temp;
-  }
-
-
   public int findKthLargest(int[] nums, int k) {
-    if (nums.length == 1) return nums[0];
+    int n = nums.length;
+    if (n == 1) return nums[0];
 
-    int left = 0, right  = nums.length - 1;
-    while (left <= right) {
-      int pivot = partition(nums, left, right);
-      if (pivot - left + 1 < k) {
-        k = k - (pivot - left + 1);
-        left = pivot + 1;
-      } else if (pivot - left + 1 > k) {
-        right = pivot - 1;
-      } else {
-        return nums[pivot];
-      }
+    int lo = 0, hi = n - 1;
+    k = n - k;
+    while (lo <= hi) {
+      int p = partition(nums, lo, hi);
+      if (p < k) lo = p + 1;
+      else if (p > k) hi = p - 1;
+      else return nums[p];
     }
-    return 0;
+    return -1;
   }
 
-  private int partition(int[] nums, int left, int right) {
-    int pivot = left + (right - left) / 2;
-    int pivotValue = nums[pivot];
-    swap(nums, pivot, right);
-
-    int lo = left, hi = right - 1;
-    while (lo <= hi) {
-      if (nums[lo] >= pivotValue) lo++;
-      else if (nums[hi] < pivotValue) hi--;
-      else swap(nums, lo++, hi--);
+  private int partition(int[] nums, int lo, int hi) {
+    int pivot = nums[lo], left = lo + 1, right = hi;
+    while (left <= right) {
+      while (left < hi && nums[left] <= pivot) left++;
+      while (right > lo && nums[right] > pivot) right--;
+      if (left >= right) break;
+      swap(nums, left, right);
     }
     swap(nums, lo, right);
-    return lo;
+    return right;
+  }
+
+  private void swap(int[] nums, int i, int j) {
+    int temp = nums[i];
+    nums[i] = nums[j];
+    nums[j] = temp;
   }
 }
