@@ -78,4 +78,43 @@ public class Solution0068 {
   private String blank(int length) {
     return new String(new char[length]).replace('\0', ' ');
   }
+
+
+  public List<String> fullJustify1(String[] words, int maxWidth) {
+    List<String> result = new ArrayList<>();
+    int n = words.length, left = 0, right = 0;
+    StringBuilder sb = new StringBuilder();
+    while (left < n) {
+      right = left;
+      sb.setLength(0);
+      int len = words[right++].length();
+      while (right < n && (len + 1 + words[right].length() <= maxWidth)) {
+        len += 1 + words[right++].length();
+      }
+      right--;
+      if (left == right) result.add(sb.append(words[left]).append(" ".repeat(maxWidth - words[left].length())).toString());
+      else {
+        boolean isLastLine = (right == words.length - 1);
+        int numSpace = right - left;
+        int totalLen = 0;
+        for (int i = left; i <= right; i++) {
+          totalLen += words[i].length();
+        }
+        int totalSpace = maxWidth - totalLen;
+        String space = isLastLine ? " " : " ".repeat(totalSpace / numSpace);
+        int remainder = isLastLine ? 0 : totalSpace % numSpace;
+        for (int i = left; i <= right; i++) {
+          sb.append(words[i]).append(space).append(remainder-- > 0 ? " " : "");
+        }
+        result.add(sb.toString().trim() + " ".repeat(maxWidth - sb.toString().trim().length()));
+      }
+      left = right + 1;
+    }
+    return result;
+  }
+
+  public static void main(String[] args) {
+    Solution0068 temp = new Solution0068();
+    temp.fullJustify1(new String[]{"This", "is", "an", "example", "of", "text", "justification."}, 16);
+  }
 }

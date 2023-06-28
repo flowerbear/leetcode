@@ -76,4 +76,27 @@ public class Solution0099 {
       second.val = t;
     }
   }
+
+
+  private TreeNode first = null, second = null, preNode = null;
+
+  public void recoverTree1(TreeNode root) {
+    helper(root);
+    int temp = first.val;
+    first.val = second.val;
+    second.val = temp;
+  }
+
+  private void helper(TreeNode root) {
+    if (root == null) return;
+    helper(root.left);
+    if (first == null && (preNode ==  null || preNode.val >= root.val)) {
+      first = preNode;
+    }
+    if (first != null && preNode.val >= root.val) {
+      second = root;
+    }
+    preNode = root;
+    helper(root.right);
+  }
 }

@@ -70,4 +70,28 @@ public class Solution0261 {
       if (id[i] == t) id[i] = id[v];
     }
   }
+
+  public boolean validTree2(int n, int[][] edges) {
+    int[] p = new int[n];
+    for (int i = 0; i < n; i++) p[i] = i;
+    for (int[] e : edges) {
+      int a = e[0], b = e[1], finda = find(a, p), findb= find(b, p);
+      if (finda == findb) return false;
+      p[finda] = findb;
+      n--;
+    }
+    return n == 1;
+  }
+
+  private int find(int x, int[] p) {
+    if (p[x] != x) {
+      p[x] = find(p[x], p);
+    }
+    return p[x];
+  }
+
+  public static void main(String[] args) {
+    Solution0261 temp = new Solution0261();
+    temp.validTree2(5, new int[][]{{0, 1}, {0, 2}, {0, 3}, {1, 4}});
+  }
 }

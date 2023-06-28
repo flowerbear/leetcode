@@ -1,5 +1,7 @@
 package com.orlando.java.self001.from1to50;
 
+import java.util.Arrays;
+
 /*
  * Longest Common Prefix
  *
@@ -63,5 +65,17 @@ public class Solution0014 {
       if (!strs[i].startsWith(str)) return false;
     }
     return true;
+  }
+
+
+  public String longestCommonPrefix3(String[] strs) {
+    Arrays.sort(strs);
+    String first = strs[0], last = strs[strs.length - 1];
+    int c = 0;
+    while (c < first.length() && c < last.length()) {
+      if (first.charAt(c) == last.charAt(c)) c++;
+      else break;
+    }
+    return first.substring(0, c);
   }
 }

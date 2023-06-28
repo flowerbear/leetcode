@@ -2,7 +2,7 @@ package com.orlando.java.common;
 
 import java.util.Random;
 
-public class Quick {
+public class QuickSort {
 
     public static void sort(int[] nums) {
         shuffle(nums);
