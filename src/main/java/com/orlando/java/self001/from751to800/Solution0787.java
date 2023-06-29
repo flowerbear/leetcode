@@ -47,22 +47,22 @@ public class Solution0787 {
 
     // Bellman ford algorithm
     public int findCheapestPrice1(int n, int[][] flights, int src, int dst, int K) {
-        int[] cost=new int[n];
+        int[] cost = new int[n];
         Arrays.fill(cost,Integer.MAX_VALUE);
-        cost[src]=0;
-        for(int i=0;i<=K;i++)
+        cost[src] = 0;
+        for (int i = 0; i <= K; i++)
         {
-            int[] temp= Arrays.copyOf(cost,n);
-            for(int[] f: flights)
+            int[] temp = Arrays.copyOf(cost,n);
+            for (int[] f : flights)
             {
-                int curr=f[0],next=f[1],price=f[2];
-                if(cost[curr]==Integer.MAX_VALUE)
+                int curr = f[0], next = f[1], price = f[2];
+                if (cost[curr] == Integer.MAX_VALUE)
                     continue;
-                temp[next]=Math.min(temp[next],cost[curr]+price);
+                temp[next] = Math.min(temp[next], cost[curr] + price);
             }
-            cost=temp;
+            cost = temp;
         }
-        return cost[dst]==Integer.MAX_VALUE?-1:cost[dst];
+        return cost[dst] == Integer.MAX_VALUE ? -1 : cost[dst];
     }
 }
 

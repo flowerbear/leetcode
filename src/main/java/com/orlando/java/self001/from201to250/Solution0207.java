@@ -20,9 +20,7 @@ public class Solution0207 {
     int[] indegree = new int[numCourses];
 
     for (int i = 0; i < prerequisites.length; i++) {
-      List<Integer> temp = adjMap.getOrDefault(prerequisites[i][1], new ArrayList<>());
-      temp.add(prerequisites[i][0]);
-      adjMap.put(prerequisites[i][1], temp);
+      adjMap.computeIfAbsent(prerequisites[i][1], l -> new ArrayList<>()).add(prerequisites[i][0]);
       indegree[prerequisites[i][0]]++;
     }
 

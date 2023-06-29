@@ -25,6 +25,8 @@ public class Solution0088 {
         }
       } else if (n > 0) {
         nums1[i] = nums2[n - 1]; n--;
+      } else {
+        break;
       }
     }
   }
