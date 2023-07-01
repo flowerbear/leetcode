@@ -90,3 +90,14 @@ select post_id,
   ifnull(GROUP_CONCAT(distinct topic_id order by topic_id asc SEPARATOR ','), "Ambiguous!") as topic
 from posts a left join keywords b on concat(' ', lower(a.content), ' ') like concat('% ', lower(b.word), ' %')
 group by post_id;
+
+
+SELECT post_id,
+       IFNULL(GROUP_CONCAT(DISTINCT topic_id ORDER BY topic_id), 'Ambiguous!') AS topic
+FROM Posts p LEFT JOIN Keywords k ON (p.content REGEXP CONCAT('\\b', k.word, '\\b'))
+GROUP BY post_id;
+
+SELECT post_id,
+       IFNULL(GROUP_CONCAT(DISTINCT topic_id ORDER BY topic_id), 'Ambiguous!') AS topic
+FROM Posts p LEFT JOIN Keywords k ON (p.content REGEXP CONCAT('[[:<:]]', k.word, '[[:>:]]'))
+GROUP BY post_id;

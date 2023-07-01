@@ -109,3 +109,31 @@ junior_cte AS
 SELECT 'Senior' AS experience, COUNT(1) AS accepted_candidates FROM senior_cte
 UNION ALL
 SELECT 'Junior' AS experience, COUNT(1) AS accepted_candidates FROM junior_cte;
+
+
+WITH seniors AS (
+    SELECT *
+    FROM (
+        SELECT employee_id,
+               70000 - SUM(salary) OVER (ORDER BY salary) AS s_remainings
+        FROM Candidates
+        WHERE experience = 'Senior'
+    ) s
+    WHERE s_remainings >= 0
+), juniors AS (
+    SELECT *
+    FROM (
+        SELECT employee_id,
+               IFNULL((SELECT MIN(s_remainings) FROM seniors), 70000) - SUM(salary) OVER (ORDER BY salary) AS j_remainings
+        FROM Candidates
+        WHERE experience = 'Junior'
+    ) j
+    WHERE j_remainings >= 0
+)
+SELECT 'Senior' AS experience,
+       COUNT(employee_id) AS accepted_candidates
+FROM seniors
+UNION
+SELECT 'Junior',
+       COUNT(employee_id)
+FROM juniors;

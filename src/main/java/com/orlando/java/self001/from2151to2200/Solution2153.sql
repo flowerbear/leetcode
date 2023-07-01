@@ -88,3 +88,35 @@ from (
 select bus_id, capacity, cnt, @passengers_cnt := LEASE(capacity, cnt - @accum) as passengers_cnt, @accum := @accum + @passengers_cnt
 from cte, (select @accum := 0, @passengers_cnt := 0) init) t
 order by bus_id;
+
+
+WITH RECURSIVE bus_stats AS (
+    SELECT b.*,
+           COUNT(p.passenger_id) AS passengers_cnt,
+           ROW_NUMBER() OVER (ORDER BY arrival_time) AS rn
+    FROM Buses b LEFT JOIN Passengers p ON (p.arrival_time <= b.arrival_time)
+    GROUP BY b.bus_id
+), cte AS (
+    SELECT bus_id,
+           passengers_cnt,
+           CASE WHEN capacity >= passengers_cnt THEN passengers_cnt ELSE capacity END AS passengers_taken,
+           CASE WHEN capacity >= passengers_cnt THEN 0 ELSE passengers_cnt - capacity END AS passengers_waiting,
+           rn
+    FROM bus_stats
+    WHERE rn = 1
+    UNION
+    SELECT bs.bus_id,
+           bs.passengers_cnt,
+           CASE WHEN bs.capacity >= bs.passengers_cnt - c.passengers_cnt + c.passengers_waiting
+                     THEN bs.passengers_cnt - c.passengers_cnt + c.passengers_waiting
+                ELSE bs.capacity END,
+           CASE WHEN bs.capacity >= bs.passengers_cnt - c.passengers_cnt + c.passengers_waiting
+                     THEN 0
+                ELSE bs.passengers_cnt - c.passengers_cnt + c.passengers_waiting - bs.capacity END,
+           bs.rn
+    FROM cte c INNER JOIN bus_stats bs ON (bs.rn = c.rn + 1)
+)
+SELECT bus_id,
+       passengers_taken AS passengers_cnt
+FROM cte
+ORDER BY bus_id;

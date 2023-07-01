@@ -31,3 +31,12 @@ left join
 FROM student
 WHERE continent = 'Asia') As asia
 on am.rm = asia.rn;
+
+SELECT MAX(CASE WHEN continent = 'America' THEN name ELSE NULL END) AS America,
+       MAX(CASE WHEN continent = 'Asia' THEN name ELSE NULL END) AS Asia,
+       MAX(CASE WHEN continent = 'Europe' THEN name ELSE NULL END) AS Europe
+FROM (SELECT name,
+             continent,
+             ROW_NUMBER() OVER (PARTITION BY continent ORDER BY name) AS rk
+      FROM Student) t
+GROUP BY rk;

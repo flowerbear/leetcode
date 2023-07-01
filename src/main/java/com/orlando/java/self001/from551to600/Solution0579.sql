@@ -53,10 +53,23 @@ Employ ‘3’ has two salary records except its most recent pay month ‘4’: 
 select e.id, e.month, sum(te.salary) as salary
 from
 (select e1.id, e1.month
-from Employee_579 e1 left join
+from Employee e1 left join
 (select id, max(month)  month
-from Employee_579
+from Employee
 group by id) e2 on e1.id = e2.id where e1.month < e2.month) e
-left join Employee_579 te on e.id = te.id and te.month between e.month - 2 and e.month
+left join Employee te on e.id = te.id and te.month between e.month - 2 and e.month
 group by e.id, e.month
 order by e.id, e.month desc;
+
+
+SELECT id,
+       month,
+       SUM(salary) OVER (PARTITION BY id ORDER BY month RANGE 2 PRECEDING) AS Salary
+FROM Employee
+WHERE (id, month) NOT IN (
+    SELECT id,
+           MAX(month)
+    FROM Employee
+    GROUP BY id
+)
+ORDER BY id, month DESC;

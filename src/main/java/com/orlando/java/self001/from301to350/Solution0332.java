@@ -38,5 +38,25 @@ public class Solution0332 {
     }
     return router;
   }
+
+
+  HashMap<String, PriorityQueue<String>> adjMap = new HashMap<>();
+  List<String> res = new LinkedList<>();
+
+  public List<String> findItineraryDFS(List<List<String>> tickets) {
+
+    for (List<String> ticket : tickets) {
+      adjMap.computeIfAbsent(ticket.get(0), k -> new PriorityQueue<>()).add(ticket.get(1));
+    }
+    dfs("JFK");
+    return res;
+  }
+
+  private void dfs(String start) {
+    while (adjMap.containsKey(start) && !adjMap.get(start).isEmpty()) {
+      dfs(adjMap.get(start).poll());
+    }
+    res.add(0, start);
+  }
 }
 

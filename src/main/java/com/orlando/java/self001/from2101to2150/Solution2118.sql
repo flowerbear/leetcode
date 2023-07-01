@@ -82,3 +82,9 @@ SELECT
         END
         ORDER BY power DESC SEPARATOR ''), '=0') AS equation
 FROM Terms;
+
+
+SELECT power,
+       SUM(factor) AS factor
+FROM Terms
+GROUP BY power

@@ -117,3 +117,26 @@ select 'failed' as period_state, start_date, min(end_date) as end_date from (
     ) fe
     on start_date <= end_date group by start_date
     order by start_date;
+
+WITH task_log AS (
+    SELECT 'failed' AS period_state,
+           fail_date AS date
+    FROM Failed
+    WHERE fail_date BETWEEN '2019-01-01' AND '2019-12-31'
+    UNION
+    SELECT 'succeeded',
+           success_date
+    FROM Succeeded
+    WHERE success_date BETWEEN '2019-01-01' AND '2019-12-31'
+)
+SELECT period_state,
+       MIN(date) AS start_date,
+       MAX(date) AS end_date
+FROM (
+    SELECT period_state,
+           date,
+           DATE_ADD(date, INTERVAL -ROW_NUMBER() OVER (PARTITION BY period_state ORDER BY date) DAY) AS grp
+    FROM task_log
+) t
+GROUP BY period_state, grp
+ORDER BY start_date;

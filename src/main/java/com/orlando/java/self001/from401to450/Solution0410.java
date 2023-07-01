@@ -49,5 +49,32 @@ public class Solution0410 {
     }
     return true;
   }
+
+
+  public int splitArray1(int[] nums, int k) {
+    int left = 0, right = 0, n = nums.length;
+    for (int num : nums) {
+      left = Math.max(left, num);
+      right += num;
+    }
+    int res = 0;
+    while (left <= right) {
+      int mid = left + (right - left) / 2;
+      int tempSum = 0, count = 1;
+      for (int i = 0; i < n; i++) {
+        if (tempSum + nums[i] <= mid) tempSum += nums[i];
+        else {
+          count++;
+          tempSum = nums[i];
+        }
+      }
+      if (count > k) left = mid + 1;
+      else {
+        right = mid - 1;
+        res = mid;
+      }
+    }
+    return res;
+  }
 }
 

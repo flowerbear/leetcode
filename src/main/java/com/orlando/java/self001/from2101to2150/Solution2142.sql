@@ -84,3 +84,13 @@ select bus_id, count(a.arrival_time) as passengers_cnt
 from buses b left join cte a on b.arrival_time = a.arrival_time
 group by bus_id
 order by bus_id;
+
+SELECT bus_id,
+       COUNT(passenger_id) AS passengers_cnt
+FROM (
+    SELECT *,
+           IFNULL(LAG(arrival_time) OVER (ORDER BY arrival_time), 0) AS previous
+    FROM Buses
+) b LEFT JOIN Passengers p ON (p.arrival_time > b.previous AND p.arrival_time <= b.arrival_time)
+GROUP BY bus_id
+ORDER BY bus_id;

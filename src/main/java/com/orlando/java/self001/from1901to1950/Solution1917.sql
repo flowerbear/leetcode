@@ -96,3 +96,27 @@ WHERE  NOT EXISTS
       WHERE  (a.user_id = b.user1_id AND a.recommended_id = b.user2_id)
              OR
              (a.user_id = b.user2_id AND a.recommended_id = b.user1_id));
+
+SELECT DISTINCT l.user_id,
+       l.recommended_id
+FROM (
+    SELECT l1.user_id AS user_id,
+           l2.user_id AS recommended_id
+    FROM Listens l1 INNER JOIN Listens l2 ON (l1.user_id != l2.user_id
+                                              AND l1.song_id = l2.song_id
+                                              AND l1.day = l2.day)
+    GROUP BY l1.user_id, l2.user_id, l1.day
+    HAVING COUNT(DISTINCT l1.song_id) >= 3
+) l
+LEFT JOIN (
+    SELECT user1_id,
+           user2_id
+    FROM Friendship
+    UNION
+    SELECT user2_id,
+           user1_id
+    FROM Friendship
+) f
+ON (l.user_id = f.user1_id AND l.recommended_id = f.user2_id)
+WHERE f.user1_id IS NULL AND f.user2_id IS NULL
+ORDER BY l.user_id, l.recommended_id;

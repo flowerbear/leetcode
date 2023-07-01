@@ -54,3 +54,15 @@ FROM   (SELECT a.player_id,
                       ON Datediff(b.event_date, a.install_dt) = 1
                          AND a.player_id = b.player_id ) AS t
 GROUP  BY install_dt;
+
+
+SELECT first_login AS install_dt,
+       COUNT(DISTINCT player_id) AS installs,
+       ROUND(SUM(event_date - first_login = 1)/COUNT(DISTINCT player_id), 2) AS Day1_retention
+FROM (
+    SELECT player_id,
+           event_date,
+           MIN(event_date) OVER (PARTITION BY player_id ORDER BY event_date) AS first_login
+    FROM Activity
+) t
+GROUP BY first_login;

@@ -76,3 +76,19 @@ LEFT JOIN Executed ON Tasks.task_id = Executed.task_id
                       AND CTE.subtask_id = Executed.subtask_id
 WHERE Executed.subtask_id IS NULL
 ORDER BY NULL;
+
+
+WITH Recursive all_tasks AS (
+    SELECT task_id,
+           1 AS subtask_id
+    FROM Tasks
+    UNION
+    SELECT a.task_id,
+           subtask_id + 1
+    FROM all_tasks a INNER JOIN Tasks t ON (a.task_id = t.task_id)
+    WHERE a.subtask_id < t.subtasks_count
+)
+SELECT task_id,
+       subtask_id
+FROM all_tasks LEFT JOIN Executed e USING (task_id, subtask_id)
+WHERE e.task_id IS NULL;

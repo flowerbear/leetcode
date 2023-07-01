@@ -25,3 +25,15 @@ select avg(Number) as median from (
         and
         sum(n2.Frequency) - avg(n1.Frequency) <= (select sum(Frequency) from Numbers) / 2
 ) med;
+
+
+SELECT ROUND(AVG(num), 1) AS median
+FROM (
+    SELECT num,
+           frequency,
+           SUM(frequency) OVER (ORDER BY num) AS smaller_cnt,
+           SUM(frequency) OVER (ORDER BY num DESC) AS larger_cnt,
+           SUM(frequency) OVER () AS size
+    FROM Numbers
+) t
+WHERE smaller_cnt >= size/2 AND larger_cnt >= size/2;

@@ -119,3 +119,21 @@ WHERE NOT EXISTS
 GROUP BY user_id,
          page_id
 ORDER BY NULL;
+
+
+WITH friends AS (
+    SELECT user1_id,
+           user2_id
+    FROM friendship
+    UNION
+    SELECT user2_id,
+           user1_id
+    FROM friendship
+)
+SELECT user1_id AS user_id,
+       l.page_id,
+       COUNT(l.page_id) AS friends_likes
+FROM friends f INNER JOIN likes l ON (f.user2_id = l.user_id)
+               LEFT JOIN likes l1 ON (f.user1_id = l1.user_id AND l.page_id = l1.page_id)
+WHERE l1.user_id IS NULL
+GROUP BY user1_id, l.page_id;

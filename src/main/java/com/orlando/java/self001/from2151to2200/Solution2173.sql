@@ -80,3 +80,33 @@ group by 1, 2
 select player_id, ifnull(max(cnt), 0) as longest_streak
 from (select distinct player_id from Matches) a left join cte_win_cnt b on a.player_id = b.player_id
 group by 1;
+
+
+SELECT player_id,
+       MAX(winning_streak) AS longest_streak
+FROM (
+    SELECT *,
+           SUM(IF(result = 'Win', 1, 0)) AS winning_streak
+    FROM (
+        SELECT *,
+               SUM(IF(result = 'Win', 0, 1)) OVER (PARTITION BY player_id ORDER BY match_day) AS grp
+        FROM Matches
+    ) t
+    GROUP BY player_id, grp
+) t1
+GROUP BY player_id;
+
+SELECT player_id,
+       MAX(winning_streak) AS longest_streak
+FROM (
+    SELECT player_id,
+           SUM(result = 'Win') AS winning_streak
+    FROM (
+        SELECT *,
+               ROW_NUMBER() OVER (PARTITION BY player_id ORDER BY match_day) AS rk1,
+               ROW_NUMBER() OVER (PARTITION BY player_id, result ORDER BY match_day) AS rk2
+        FROM Matches
+    ) t
+    GROUP BY player_id, rk1-rk2
+) t1
+GROUP BY player_id;
