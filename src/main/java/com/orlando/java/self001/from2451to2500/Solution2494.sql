@@ -110,3 +110,24 @@ SELECT hall_id,
 FROM event_id_cte
 GROUP BY hall_id, event_id
 ORDER BY NULL;
+
+SELECT hall_id,
+       MIN(start_day) AS start_day,
+       MAX(end_day) AS end_day
+FROM (
+    SELECT *,
+           SUM(range_start) OVER (PARTITION BY hall_id ORDER BY start_day) AS range_grp
+    FROM (
+        SELECT *,
+               CASE WHEN start_day <= LAG(max_end_day_so_far) OVER (PARTITION BY hall_id ORDER BY start_day) THEN 0
+                    ELSE 1 END AS range_start
+        FROM (
+            SELECT hall_id,
+                   start_day,
+                   end_day,
+                   MAX(end_day) OVER (PARTITION BY hall_id ORDER BY start_day) AS max_end_day_so_far
+            FROM HallEvents
+        ) t
+    ) t1
+) t2
+GROUP BY hall_id, range_grp;

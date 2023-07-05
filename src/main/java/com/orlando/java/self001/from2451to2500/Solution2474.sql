@@ -101,3 +101,23 @@ FROM year_cte a
 GROUP BY a.customer_id
 HAVING SUM(a.total >= IFNULL(b.total, 0)) = 1
 ORDER BY NULL;
+
+
+WITH annual_purchases AS (
+    SELECT customer_id,
+           YEAR(order_date) AS year,
+           SUM(price) AS total_purchases
+    FROM Orders
+    GROUP BY customer_id, YEAR(order_date)
+)
+SELECT customer_id
+FROM (
+    SELECT customer_id,
+           year - LAG(year) OVER w AS year_diff,
+           total_purchases - LAG(total_purchases) OVER w AS purchases_diff
+    FROM annual_purchases
+    WINDOW w AS (PARTITION BY customer_id ORDER BY year)
+) t
+GROUP BY customer_id
+HAVING COUNT(customer_id) = 1
+       OR (SUM(year_diff = 1) = COUNT(year_diff) AND SUM(purchases_diff > 0) = COUNT(purchase_diff));

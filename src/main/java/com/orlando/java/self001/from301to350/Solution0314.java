@@ -31,8 +31,9 @@ public class Solution0314 {
     while (!q.isEmpty()) {
       TreeNode cur = q.poll();
       int col = cols.poll();
-      if (!map.containsKey(col)) map.put(col, new ArrayList<>());
-      map.get(col).add(cur.val);
+      //if (!map.containsKey(col)) map.put(col, new ArrayList<>());
+      //map.get(col).add(cur.val);
+      map.computeIfAbsent(col, k -> new ArrayList<>()).add(cur.val);
       if (cur.left != null) {
         q.offer(cur.left);
         cols.offer(col - 1);

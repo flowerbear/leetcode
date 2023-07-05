@@ -19,7 +19,7 @@ public class Solution0317 {
   public int shortestDistance(int[][] grid) {
     int m = grid.length, n = grid[0].length;
     int[][] totalDistance = new int[m][n];
-    int step = 0, result = 0;
+    int step = 0, result = Integer.MAX_VALUE;
 
     for (int i = 0; i < m; i++) {
       for (int j = 0; j < n; j++) {
@@ -52,7 +52,7 @@ public class Solution0317 {
           int _x = x + directions[i], _y = y + directions[i + 1];
           if (_x >= 0 && _x < m && _y >= 0 && _y < n && grid[_x][_y] == step) {
             queue.offer(_x * n + _y);
-            totalDistance[x][y] += curDistance;
+            totalDistance[_x][_y] += curDistance;
             grid[_x][_y]--;
             result = Math.min(result, totalDistance[_x][_y]);
           }

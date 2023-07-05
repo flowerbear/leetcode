@@ -49,4 +49,47 @@ public class Solution0973 {
   private int squaredDistance(int[] point) {
     return point[0] * point[0] + point[1] * point[1];
   }
+
+  public int[][] kClosest1(int[][] points, int k) {
+    return quickSelect1(points, k);
+  }
+
+  private int[][] quickSelect1(int[][] points, int k) {
+    int l = 0, r = points.length - 1;
+    int pivot = points.length;
+    while (pivot != k) {
+      pivot = partition(points, l, r);
+      if (pivot < k) {
+        l = pivot + 1;
+      } else if (pivot > k) {
+        r = pivot - 1;
+      }
+    }
+    return Arrays.copyOf(points, k);
+  }
+
+  private int partition1(int[][] points, int l, int r) {
+    int[] pivot = points[l];
+    int left = l + 1, right = r;
+    int pivotDist = squaredDistance(pivot);
+    while (left <= right) {
+      while (left < r && squaredDistance(points[left]) <= pivotDist) left++;
+      while (right > l && squaredDistance(points[right]) > pivotDist) right--;
+      if (left >= right) break;
+      swap(points, left, right);
+    }
+    swap(points, l, right);
+    return right;
+  }
+
+  private void swap(int[][] points, int l, int r) {
+    int[] temp = points[l];
+    points[l] = points[r];
+    points[r] = temp;
+  }
+
+  public static void main(String[] args) {
+    Solution0973 temp = new Solution0973();
+    temp.kClosest1(new int[][]{{3, 3}, {5, -1}, {-2, 4}}, 2);
+  }
 }

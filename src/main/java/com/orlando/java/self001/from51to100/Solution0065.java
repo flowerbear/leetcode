@@ -26,24 +26,27 @@ public class Solution0065 {
 
   public boolean isNumber(String s) {
     s = s.trim();
-    boolean pointSeen = false, eSeen = false, numberSeen = false;
+    boolean pointSeen = false, eSeen = false, numSeen = false;
 
     for (int i = 0; i < s.length(); i++) {
-      if (Character.isDigit(s.charAt(i))) {
-        numberSeen = true;
-      } else if (s.charAt(i) == '.') {
+      char c = s.charAt(i);
+      if (Character.isDigit(c)) {
+        numSeen = true;
+      } else if (c == '.') {
         if (eSeen || pointSeen) return false;
-        pointSeen = true;
-      } else if (s.charAt(i) == 'e' || s.charAt(i) == 'E') {
-        if (eSeen || !numberSeen) return false;
-        eSeen = true;
-        numberSeen = false;
-      } else if (s.charAt(i) == '-' || s.charAt(i) == '+') {
-        if (i != 0 && s.charAt(i - 1) != 'e' && s.charAt(i) != 'E') return false;
+        else pointSeen = true;
+      } else if (c == 'e' || c == 'E') {
+        if (eSeen || !numSeen) return false;
+        else {
+          eSeen = true;
+          numSeen = false;
+        }
+      } else if (c == '-' || c == '+') {
+        if (i != 0 && s.charAt(i - 1) != 'e' && s.charAt(i - 1) != 'E') return false;
       } else {
         return false;
       }
     }
-    return numberSeen;
+    return numSeen;
   }
 }
