@@ -1,5 +1,7 @@
 package com.orlando.java.self001.from1to50;
 
+import java.util.Arrays;
+
 /*
  * Next Permutation
  *
@@ -46,5 +48,12 @@ public class Solution0031 {
       swap(nums, i, j);
       i++; j--;
     }
+  }
+
+  public static void main(String[] args) {
+    Solution0031 temp = new Solution0031();
+    int[] test = new int[]{6, 5, 1, 2, 4, 3};
+    temp.nextPermutation(test);
+    System.out.println(Arrays.toString(test));
   }
 }

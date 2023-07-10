@@ -18,4 +18,21 @@ public class Solution0124 {
     max[0] = Math.max(max[0], root.val + leftMax + rightMax);
     return root.val + Math.max(leftMax, rightMax);
   }
+
+
+  private int max = Integer.MIN_VALUE;
+
+  public int maxPathSum1(TreeNode root) {
+
+    helper(root);
+    return max;
+  }
+
+  private int helper(TreeNode root) {
+    if (root == null) return 0;
+    int left = Math.max(0, helper(root.left));
+    int right = Math.max(0, helper(root.right));
+    max = Math.max(max, root.val + left + right);
+    return root.val + Math.max(left, right);
+  }
 }

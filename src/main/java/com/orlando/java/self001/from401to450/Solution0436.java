@@ -1,5 +1,7 @@
 package com.orlando.java.self001.from401to450;
 
+import java.util.TreeMap;
+
 /*
  * Find Right Interval
  *
@@ -15,7 +17,14 @@ package com.orlando.java.self001.from401to450;
 public class Solution0436 {
 
   public int[] findRightInterval(int[][] intervals) {
-    return null;
+    int n = intervals.length, res[] = new int[n];
+    TreeMap<Integer, Integer> map = new TreeMap<>();
+    for (int i = 0; i < n; i++) map.put(intervals[i][0], i);
+    for (int i = 0; i < n; i++) {
+      Integer key = map.ceilingKey(intervals[i][1]);
+      res[i] = key != null ? map.get(key) : -1;
+    }
+    return res;
   }
 }
 

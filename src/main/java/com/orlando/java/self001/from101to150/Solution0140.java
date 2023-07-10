@@ -1,7 +1,6 @@
 package com.orlando.java.self001.from101to150;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /*
  * Word Break II
@@ -34,5 +33,37 @@ public class Solution0140 {
       backtrack(result, tempStrs, s, i, wordDict);
       tempStrs.remove(tempStrs.size() - 1);
     }
+  }
+
+
+  HashSet<String> wordDict;
+  List<String>[] memo;
+
+  public List<String> wordBreak1(String s, List<String> wordDict) {
+    this.wordDict = new HashSet<>(wordDict);
+    memo = new List[s.length()];
+    return dp(s, 0);
+  }
+
+  private List<String> dp(String s, int i) {
+    List<String> res = new LinkedList<>();
+    if (i == s.length()) {
+      res.add("");
+      return res;
+    }
+    if (memo[i] != null) return memo[i];
+
+    for (int len = 1; i + len <= s.length(); len++) {
+      String prefix = s.substring(i, i + len);
+      if (wordDict.contains(prefix)) {
+        List<String> subProblem = dp(s, i + len);
+        for (String sub : subProblem) {
+          if (sub.isEmpty()) res.add(prefix);
+          else res.add(prefix + " " + sub);
+        }
+      }
+    }
+    memo[i] = res;
+    return res;
   }
 }

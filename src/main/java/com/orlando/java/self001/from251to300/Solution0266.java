@@ -1,6 +1,7 @@
 package com.orlando.java.self001.from251to300;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -24,5 +25,16 @@ public class Solution0266 {
       if (evenCount > 1) return false;
     }
     return true;
+  }
+
+
+  public boolean canPermutePalindrome1(String s) {
+    Set<Character> seen = new HashSet<>();
+
+    for (final char c : s.toCharArray())
+      if (!seen.add(c))
+        seen.remove(c);
+
+    return seen.size() <= 1;
   }
 }
