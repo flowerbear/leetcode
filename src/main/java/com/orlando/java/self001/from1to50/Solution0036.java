@@ -35,4 +35,22 @@ public class Solution0036 {
       }
     return true;
   }
+
+  // 100%
+  public boolean isValidSudoku1(char[][] board) {
+    int[] vSet = new int[9], hSet = new int[9], bSet = new int[9];
+    int idx = 0;
+    for (int i = 0; i < 9; i++) {
+      for (int j = 0; j < 9; j++) {
+        if (board[i][j] != '.') {
+          idx = 1 << (board[i][j] - '0');
+          if ((hSet[i] & idx) > 0 || (vSet[j] & idx) > 0 || (bSet[(i / 3) * 3 + j / 3] & idx) > 0) return false;
+          hSet[i] |= idx;
+          vSet[j] |= idx;
+          bSet[(i / 3) * 3 + j / 3] |= idx;
+        }
+      }
+    }
+    return true;
+  }
 }

@@ -49,4 +49,19 @@ public class Solution0028 {
     }
     return lps;
   }
+
+  // 100%
+  public int strStr2(String haystack, String needle) {
+    int hLen = haystack.length(), nLen = needle.length(), idx = 0;
+    for (int i = 0; i < hLen; i++) {
+      if (haystack.charAt(i) == needle.charAt(idx)) {
+        idx++;
+        if (idx == nLen) return i - nLen + 1;
+      } else {
+        i -= idx;
+        idx = 0;
+      }
+    }
+    return -1;
+  }
 }

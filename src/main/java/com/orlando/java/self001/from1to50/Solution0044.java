@@ -16,18 +16,24 @@ public class Solution0044 {
   public boolean isMatch(String s, String p) {
     int sIdx = 0, pIdx = 0, match = 0, startIdx = -1;
     while (sIdx < s.length()) {
+      // advancing both pointers
       if (pIdx < p.length() && (p.charAt(pIdx) == '?' || s.charAt(sIdx) == p.charAt(pIdx))) {
         sIdx++; pIdx++;
-      } else if (pIdx < p.length() && p.charAt(pIdx) == '*') {
+      }
+      // * found, only advancing pattern pointer
+      else if (pIdx < p.length() && p.charAt(pIdx) == '*') {
         startIdx = pIdx;
         match = sIdx;
         pIdx++;
-      } else if (startIdx != -1) {
+      }
+      // last pattern pointer was *, advancing string pointer
+      else if (startIdx != -1) {
         pIdx = startIdx + 1;
         match++;
         sIdx = match;
       } else return false;
     }
+    //check for remaining characters in pattern
     while (pIdx < p.length() && p.charAt((pIdx)) == '*') pIdx++;
 
     return pIdx == p.length();
