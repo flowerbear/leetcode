@@ -42,4 +42,25 @@ public class Solution0103 {
     }
     return result;
   }
+
+  // 100%
+    public List<List<Integer>> zigzagLevelOrder1(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        travel(root, 0, res);
+        return res;
+    }
+
+    private void travel(TreeNode root, int level, List<List<Integer>> res) {
+        if (root == null) return;
+        if (res.size() <= level) {
+            res.add(new ArrayList<Integer>());
+        }
+        if (level % 2 == 0) {
+            res.get(level).add(root.val);
+        } else {
+            res.get(level).add(0, root.val);
+        }
+        travel(root.left, level + 1, res);
+        travel(root.right, level + 1, res);
+    }
 }
