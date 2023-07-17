@@ -30,4 +30,9 @@ public class Solution0089 {
     }
     return result;
   }
+
+  public static void main(String[] args) {
+    Solution0089 temp = new Solution0089();
+    temp.grayCode(10);
+  }
 }

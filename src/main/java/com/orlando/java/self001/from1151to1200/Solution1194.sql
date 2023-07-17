@@ -87,5 +87,7 @@ FROM   (SELECT p.group_id,
         GROUP  BY ps.player_id
         ORDER  BY group_id,
                   score DESC,
-                  player_id) top_scores
+                  player_id
+        -- limit 1 -- by default, groupby will pick the first one i.e. max score player here
+                  ) top_scores
 GROUP  BY group_id

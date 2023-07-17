@@ -41,4 +41,9 @@ public class Solution0084 {
     }
     return maxArea;
   }
+
+  public static void main(String[] args) {
+    Solution0084 temp = new Solution0084();
+    temp.largestRectangleArea(new int[]{2,1,5,6,2,3});
+  }
 }

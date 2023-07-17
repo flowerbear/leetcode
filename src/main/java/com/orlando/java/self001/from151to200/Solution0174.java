@@ -27,16 +27,21 @@ import java.util.Arrays;
 public class Solution0174 {
 
   public int calculateMinimumHP(int[][] dungeon) {
-    int m = dungeon.length, n = dungeon[0].length;
+    int n = dungeon.length, m = dungeon[0].length;
     int[] dp = new int[m + 1];
     Arrays.fill(dp, Integer.MAX_VALUE);
     dp[m - 1] = 1;
     for (int i = n - 1; i >= 0; i--) {
       for (int j = m - 1; j >=0; j--) {
-        int need = Math.min(dp[j], dp[j + 1]) - dungeon[j][i];
+        int need = Math.min(dp[j], dp[j + 1]) - dungeon[i][j];
         dp[j] = need <= 0 ? 1 : need;
       }
     }
     return dp[0];
+  }
+
+  public static void main(String[] args) {
+    Solution0174 temp = new Solution0174();
+    temp.calculateMinimumHP(new int[][]{{-2, -3, 3}, {-5, -10, 1}, {10, 30, -5}});
   }
 }

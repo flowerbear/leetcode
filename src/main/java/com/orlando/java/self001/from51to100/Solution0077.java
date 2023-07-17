@@ -20,14 +20,14 @@ public class Solution0077 {
   }
 
   private void backtrack(List<List<Integer>> result, List<Integer> temp, int start, int n, int k) {
-    if (k == 0) {
+    if (temp.size() == k) {
       result.add(new ArrayList<>(temp));
       return;
     }
 
     for (int i = start; i <= n; i++) {
       temp.add(i);
-      backtrack(result, temp, i + 1, n, k - 1);
+      backtrack(result, temp, i + 1, n, k);
       temp.remove(temp.size() - 1);
     }
   }
