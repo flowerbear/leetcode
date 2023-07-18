@@ -14,7 +14,7 @@ public class Solution0246 {
     if (num.length() == 1)
       return num.equals("0") || num.equals("1") || num.equals("8");
 
-    int l = 0, r = num.length();
+    int l = 0, r = num.length() - 1;
     while (l <= r) {
       if (num.charAt(l) == num.charAt(r)) {
         if (num.charAt(l) != '1' && num.charAt(l) != '0' && num.charAt(l) != '8') return false;
