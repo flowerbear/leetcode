@@ -21,7 +21,7 @@ public class Solution0265 {
     // min1 is the index of the 1st-smallest cost till previous house
     // min2 is the index of the 2nd-smallest cost till previous house
     int min1 = -1, min2 = -1;
-    for (int i = 1; i < n; i++) {
+    for (int i = 0; i < n; i++) {
       int last1 = min1, last2 = min2;
       min1 = -1; min2 = -1;
       for (int j = 0; j < k; j++) {
