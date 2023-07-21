@@ -45,5 +45,21 @@ public class Solution0313 {
     }
     return ugly[n - 1];
   }
+
+  public int nthSuperUglyNumber2(int n, int[] primes) {
+        PriorityQueue<int[]> queue = new PriorityQueue<>((a, b) -> (a[0] - b[0]));
+        for (int i = 0; i < primes.length; i++) {
+          queue.offer(new int[]{primes[i], primes[i], 0});
+        }
+        int[] res = new int[n];
+        res[0] = 1;
+        int i = 1;
+        while (i < n) {
+          int[] temp = queue.poll();
+          if (temp[0] != res[i - 1]) res[i++] = temp[0];
+          queue.offer(new int[]{temp[1] * res[temp[2] + 1], temp[1], temp[2] + 1});
+        }
+        return res[n - 1];
+    }
 }
 
