@@ -17,7 +17,7 @@ public class Solution0324 {
     int median = findKthLargest(nums, (n + 1) / 2);
     int left = 0, i = 0, right = n - 1;
 
-    while (i < right) {
+    while (i <= right) {
       if (nums[newIndex(i, n)] > median)
         swap(nums, newIndex(left++, n), newIndex(i++, n));
       else if (nums[newIndex(i, n)] < median)
@@ -27,49 +27,40 @@ public class Solution0324 {
     }
   }
 
-  private void swap(int[] nums, int left, int right) {
-    int temp = nums[left];
-    nums[left] = nums[right];
-    nums[right] = temp;
-  }
-
 
   private int newIndex(int index, int n) {
     return (1 + index * 2) % (n | 1);
   }
 
   private int findKthLargest(int[] nums, int k) {
-    if (nums.length == 1) return nums[0];
+    int n = nums.length, l = 0, r = n - 1;
+    k = n - k;
+    while (l <= r) {
+      int p = partition(nums, l, r);
+      if (p < k) l = p + 1;
+      else if (p > k) r = p - 1;
+      else return nums[p];
+    }
+    return -1;
+  }
 
-    int left = 0, right = nums.length - 1;
+  private int partition(int[] nums, int l, int r) {
+    int pivot = nums[l], left = l + 1, right = r;
     while (left <= right) {
-      int pivot = partitionQuick(nums, left, right);
-      if (pivot - left + 1 < k) {
-        k = k - (pivot - left + 1);
-        left = pivot + 1;
-      } else if (pivot -left + 1 > k) {
-        right = pivot - 1;
-      } else {
-        return nums[pivot];
-      }
+      while (left < r && nums[left] <= pivot) left++;
+      while (right > l && nums[right] > pivot) right--;
+      if (left >= right) break;
+      swap(nums, left, right);
     }
-    return 0;
+    swap(nums, l, right);
+    return right;
   }
 
-  private int partitionQuick(int[] nums, int left, int right) {
-    int pivot = left + (right - left) / 2;
-    int value = nums[pivot];
-    swap(nums, pivot, right);
-    int lo = left, hi = right - 1;
-    while (lo <= hi) {
-      if (nums[lo] >= value) lo++;
-      else if (nums[hi] < value) hi--;
-      else swap(nums, lo++, hi--);
-    }
-    swap(nums, lo, right);
-    return lo;
+  private void swap(int[] nums, int i, int j) {
+    int temp = nums[i];
+    nums[i] = nums[j];
+    nums[j] = temp;
   }
-
   public void wiggleSort1(int[] nums) {
     int n = nums.length;
     int[] copy = Arrays.copyOf(nums, n);

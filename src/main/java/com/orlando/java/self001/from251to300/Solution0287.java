@@ -25,4 +25,18 @@ public class Solution0287 {
     }
     return low;
   }
+
+  // 92%
+  public int findDuplicate1(int[] nums) {
+    int len = nums.length;
+    for (int num : nums) {
+      int idx = Math.abs(num);
+      if (nums[idx] < 0) {
+        return idx;
+      }
+      nums[idx] = -nums[idx];
+    }
+
+    return len;
+  }
 }

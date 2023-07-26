@@ -57,3 +57,9 @@ Result table:
 | 3           | Elizabeth     |
 +-------------+---------------+
 Only the customer_id with id 3 bought the product A and B but not the product C.
+
+select Customers.customer_id, customer_name
+    from Customers left join Orders on Customers.customer_id = Orders.customer_id
+    group by Customers.customer_id
+    having sum(product_name = 'A') > 0 and sum(product_name = 'B') > 0 and sum(product_name = 'C') = 0
+    order by Customers.customer_id;

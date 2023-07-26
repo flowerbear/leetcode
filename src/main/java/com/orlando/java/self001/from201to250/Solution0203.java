@@ -16,4 +16,19 @@ public class Solution0203 {
     head.next = removeElements(head.next, val);
     return head.val == val ? head.next : head;
   }
+
+
+  public ListNode removeElements1(ListNode head, int val) {
+    ListNode p = head;
+    while (p != null && p.val == val) {
+      head = head.next;
+      p = p.next;
+    }
+    while (p != null && p.next != null) {
+      if (p.next.val == val) {
+        p.next = p.next.next;
+      }
+    }
+    return head;
+  }
 }

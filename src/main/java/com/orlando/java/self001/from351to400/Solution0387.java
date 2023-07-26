@@ -19,5 +19,15 @@ public class Solution0387 {
     }
     return -1;
   }
+
+  public int firstUniqChar1(String s) {
+    int[] map = new int[26];
+    char[] chars = s.toCharArray();
+    for (char c  : chars) map[c - 'a']++;
+    for (int i = 0; i < chars.length; i++) {
+      if (map[chars[i] - 'a'] == 1) return i;
+    }
+    return -1;
+  }
 }
 

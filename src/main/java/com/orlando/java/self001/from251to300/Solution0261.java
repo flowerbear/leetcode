@@ -35,4 +35,10 @@ public class Solution0261 {
     if (nums[i] == i) return i;
     return find(nums, nums[i]);
   }
+
+  private int find1(int[] nums, int i) {
+    while (nums[i] != i) i = nums[i];
+    return i;
+
+  }
 }
