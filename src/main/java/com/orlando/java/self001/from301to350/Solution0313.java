@@ -1,5 +1,7 @@
 package com.orlando.java.self001.from301to350;
 
+import java.util.PriorityQueue;
+
 /*
  * Super Ugly Number
  *

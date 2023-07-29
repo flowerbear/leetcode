@@ -13,15 +13,20 @@ package com.orlando.java.self001.from401to450;
 public class Solution0424 {
 
   public int characterReplacement(String s, int k) {
-    int[] count = new int[128];
+    int[] count = new int[26];
     int max = 0, start = 0;
     for (int end = 0; end < s.length(); end++) {
-      max = Math.max(max, ++count[s.charAt(end)]);
+      max = Math.max(max, ++count[s.charAt(end) - 'A']);
       if (max + k <= end - start) {
-        count[s.charAt(start++)]--;
+        count[s.charAt(start++) - 'A']--;
       }
     }
     return s.length() - start;
+  }
+
+  public static void main(String[] args) {
+    Solution0424 temp = new Solution0424();
+    System.out.println(temp.characterReplacement("AAABBABBAAA", 1));
   }
 }
 

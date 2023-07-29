@@ -64,5 +64,46 @@ public class Solution0433 {
     return -1;
   }
 
+
+  // 100%
+  public int minMutation1(String start, String end, String[] bank) {
+    if (start.equals(end)) return 0;
+
+    int level = 0;
+    Set<String> visited = new HashSet<>();
+    Queue<String> queue = new LinkedList<>();
+    queue.offer(start);
+    visited.add(start);
+
+    while (!queue.isEmpty()) {
+      int size = queue.size();
+      while (size-- > 0) {
+        String curr = queue.poll();
+        if (curr.equals(end)) return level;
+
+        for (String s : bank) {
+          if (!visited.contains(s)) {
+            if (isNext(curr, s)) {
+              visited.add(s);
+              queue.offer(s);
+            }
+          }
+        }
+      }
+      level++;
+    }
+    return -1;
+  }
+
+  private boolean isNext(String curr, String next) {
+    int diff = 0;
+    for (int i = 0; i < curr.length(); i++) {
+      if (curr.charAt(i) != next.charAt(i)) {
+        diff++;
+        if (diff > 1) return false;
+      }
+    }
+    return true;
+  }
 }
 

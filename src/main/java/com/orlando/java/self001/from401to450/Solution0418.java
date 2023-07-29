@@ -33,5 +33,10 @@ public class Solution0418 {
     }
     return start / l;
   }
+
+  public static void main(String[] args) {
+    Solution0418 temp = new Solution0418();
+    temp.wordsTyping(new String[]{"I", "had", "apple", "pie"}, 4, 5);
+  }
 }
 
