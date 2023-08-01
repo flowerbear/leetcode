@@ -5,7 +5,7 @@ import java.util.List;
 public class Solution0444 {
 
     public boolean sequenceReconstruction(int[] org, List<List<Integer>> seqs) {
-
+        return false;
     }
 }
 
