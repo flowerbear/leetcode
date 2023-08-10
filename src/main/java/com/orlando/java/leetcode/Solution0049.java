@@ -19,4 +19,9 @@ public class Solution0049 {
     }
     return new ArrayList<>(result.values());
   }
+
+  public static void main(String[] args) {
+    Solution0049 temp = new Solution0049();
+    temp.groupAnagrams(new String[]{"test", "estt", "agtb", "abcd"});
+  }
 }
