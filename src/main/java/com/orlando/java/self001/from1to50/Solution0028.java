@@ -64,4 +64,9 @@ public class Solution0028 {
     }
     return -1;
   }
+
+  public static void main(String[] args) {
+    Solution0028 temp = new Solution0028();
+    temp.strStr2("abcdabd", "abd");
+  }
 }

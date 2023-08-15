@@ -18,6 +18,7 @@ public class KMP {
             }
             X = dp[X][pat.charAt(j)];
         }
+        this.lpsTable = lpsTable(pat);
     }
 
     public int search(String text) {
@@ -27,6 +28,33 @@ public class KMP {
         for (int i = 0; i < N; i++) {
             j = dp[j][text.charAt(i)];
             if (j == M) return i - M + 1;
+        }
+        return -1;
+    }
+
+    private int[] lpsTable;
+
+    private int[] lpsTable(String pat) {
+        int n = pat.length(), len = 0, lpsTable[] = new int[n];
+        for (int i = 1; i < n; i++) {
+            while (len > 0 && pat.charAt(i) != pat.charAt(len)) len = lpsTable[len - 1];
+            if (pat.charAt(i) == pat.charAt(len)) len++;
+            lpsTable[i] = len;
+        }
+        return lpsTable;
+    }
+
+    public int searchKMP(String text) {
+        int n = text.length(), m = this.pat.length();
+        for (int i = 0, j = 0; i < n;) {
+            if (text.charAt(i) == this.pat.charAt(j)) {
+                i++; j++;
+            }
+            if (j == m) return i - j;
+            if (i < n && text.charAt(i) != this.pat.charAt(j)) {
+                if (j != 0) j = lpsTable[j - 1];
+                else i++;
+            }
         }
         return -1;
     }

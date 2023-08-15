@@ -11,7 +11,8 @@ import com.orlando.java.common.TreeNode;
  */
 public class Solution0099 {
 
-  private void morrisTraversal(TreeNode root) {
+  // Inorder
+  private void morrisTraversalInorder(TreeNode root) {
     TreeNode temp = null;
     while (root != null) {
       if (root.left != null) {
@@ -35,6 +36,30 @@ public class Solution0099 {
     }
   }
 
+  // Preorder
+  private void morrisTraversalPreOrder(TreeNode root) {
+    TreeNode temp = null;
+    while (root != null) {
+      if (root.left != null) {
+        temp = root.left;
+        while (temp.right != null && temp.right != root) {
+          temp = temp.right;
+        }
+
+        if (temp.right != null) {
+          temp.right = null;
+          root = root.right;
+        } else {
+          System.out.println(root.val);
+          temp.right = root;
+          root = root.left;
+        }
+      } else {
+        System.out.println(root.val);
+        root = root.right;
+      }
+    }
+  }
   // Morris Traversal
   public void recoverTree(TreeNode root) {
     TreeNode pre = null, first = null, second = null, temp = null;
