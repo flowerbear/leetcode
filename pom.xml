@@ -20,7 +20,7 @@
         <jsonassert.version>1.5.0</jsonassert.version>
         <logback.version>1.2.3</logback.version>
         <slf4j.version>1.7.35</slf4j.version>
-        <org.json.version>20230227</org.json.version>
+        <org.json.version>20231013</org.json.version>
         <servlet.api.version>5.0.0</servlet.api.version>
     </properties>
 
